@@ -1,0 +1,41 @@
+name: tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  curl-test:
+    name: Test Compute Edge service using curl
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Set up Fastly CLI
+        uses: fastly/compute-actions/setup@main
+      - name: Install Edge code dependencies
+        run: rm package-lock.json && npm install
+      - name: Start Compute Server
+        run: fastly compute serve > ./server_out.txt & (tail -f ./server_out.txt &) | grep -qF 'Listening on http://127.0.0.1:7676'
+      - name: Run tests
+        run: ./curl-tests/test.sh
+  compute-testing-test:
+    name: Test Compute Edge service using compute-testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Set up Fastly CLI
+        uses: fastly/compute-actions/setup@main
+      - name: Install Edge code dependencies
+        run: rm package-lock.json && npm install
+      - name: Install Test code dependencies
+        working-directory: ./test
+        run: npm install
+      - name: Run tests
+        working-directory: ./test
+        run: npm test

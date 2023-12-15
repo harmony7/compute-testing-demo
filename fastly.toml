@@ -1,0 +1,19 @@
+# This file describes a Fastly Compute package. To learn more visit:
+# https://developer.fastly.com/reference/fastly-toml/
+
+authors = ["komuro@fastly.com"]
+cloned_from = "https://github.com/fastly/compute-starter-kit-javascript-default"
+description = "Compute edge application to illustrate js-compute-testing"
+language = "javascript"
+manifest_version = 3
+name = "compute-testing-demo"
+service_id = ""
+
+[local_server]
+[local_server.backends]
+[local_server.backends.backend]
+url = "https://http-me.glitch.me/"
+
+[scripts]
+  build = "npm run build"
+  post_init = "npm install"
