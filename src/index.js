@@ -6,7 +6,6 @@ async function handleRequest(event) {
   const url = new URL(req.url);
 
   const response = await fetch(req, {
-    'headers': { 'host': 'http-me.glitch.me' },
     'backend': 'backend'
   });
 

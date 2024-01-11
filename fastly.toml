@@ -13,6 +13,7 @@ service_id = ""
 [local_server.backends]
 [local_server.backends.backend]
 url = "https://http-me.glitch.me/"
+override_host = "http-me.glitch.me"
 
 [scripts]
   build = "npm run build"
